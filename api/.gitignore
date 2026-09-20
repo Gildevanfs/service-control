@@ -1,0 +1,17 @@
+# --- Dependencias / build ---
+node_modules/
+dist/
+build/
+coverage/
+
+# --- Segredos / ambiente (nunca subir senhas do Postgres) ---
+.env
+.env.*
+!.env.example
+
+# --- Lixo / artefatos de diagnostico ---
+*.log
+*.ps1
+*.zip
+Thumbs.db
+.DS_Store

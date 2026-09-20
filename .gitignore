@@ -1,0 +1,23 @@
+# --- Dependencias / build ---
+node_modules/
+dist/
+build/
+coverage/
+
+# --- Segredos / ambiente ---
+.env
+.env.*
+!.env.example
+
+# --- Lixo e artefatos ---
+*.log
+*.ps1
+*.zip
+Thumbs.db
+.DS_Store
+
+# --- IDEs / SO ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.vscode-server/

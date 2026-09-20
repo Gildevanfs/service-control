@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: servicecontrol-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: servicecontrol
+      POSTGRES_PASSWORD: servicecontrol
+      POSTGRES_DB: servicecontrol
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U servicecontrol -d servicecontrol"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ./api
+    container_name: servicecontrol-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: servicecontrol
+      DB_PASSWORD: servicecontrol
+      DB_DATABASE: servicecontrol
+      DB_SYNCHRONIZE: "true"
+    ports:
+      - "1511:3000"
+
+volumes:
+  pgdata:
