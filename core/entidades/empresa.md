@@ -24,3 +24,7 @@ Empresa
 - **Exclusão:** soft delete / inativação (nunca apagar fisicamente).
 - **Arquivos:** armazenamento por tenant — `logo/{id_empresa}/...`.
 - **Adiado:** papel super admin da plataforma e campo `plano`.
+
+## Status na API (2026-09)
+- **CRUD IMPLEMENTADO (2026-09).** `CompaniesService` + `CompaniesController` + DTOs (`create-company.dto`, `update-company.dto`) criados e registrados no `CompaniesModule`. Rotas: `POST/GET /companies`, `GET/PATCH/DELETE /companies/:id`. Soft delete (`status: 'inactive'`), validação `class-validator`, rotas raiz sem prefixo. `cnpj` somente 14 dígitos (validação de dígito verificador = pendente, Camada 1).
+- **Histórico:** existia um `companies.service.ts` não registrado que importava `dto/create-company.dto` e `dto/update-company.dto` (nunca criados) — **quebrava o `npm run build`**. Foi removido em 2026-09 e o CRUD foi reimplementado de forma coerente.

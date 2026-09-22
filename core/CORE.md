@@ -59,7 +59,7 @@ Cada entidade tem seu próprio arquivo em `entidades/`, com estrutura e decisõe
 
 ## 7. Em aberto
 - Framework do app nativo (Flutter/React Native/Kotlin).
-- Autenticação (JWT), refresh token.
+- **Autenticação:** JWT login + access token implementados (`POST /auth/login`, `JwtAuthGuard`); **refresh token pendente**.
 - Modelo de funções/papéis (acesso é por telas por enquanto).
 - Estratégia de sincronização offline (grau de conflito).
 - Super admin da plataforma e campo `plano` da empresa.

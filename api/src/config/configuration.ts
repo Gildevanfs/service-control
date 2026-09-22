@@ -8,4 +8,15 @@ export default () => ({
     database: process.env.DB_DATABASE,
     synchronize: process.env.DB_SYNCHRONIZE === 'true',
   },
+  jwt: {
+    secret: process.env.JWT_SECRET ?? 'servicecontrol-dev-secret',
+    expiresIn: process.env.JWT_EXPIRES_IN ?? '8h',
+  },
+  seed: {
+    companyCnpj: process.env.SEED_COMPANY_CNPJ ?? '11222333000181',
+    companyName: process.env.SEED_COMPANY_NAME ?? 'Empresa Seed',
+    adminEmail: process.env.SEED_ADMIN_EMAIL ?? 'admin@servicecontrol.com.br',
+    adminPassword: process.env.SEED_ADMIN_PASSWORD ?? 'admin123',
+    adminName: process.env.SEED_ADMIN_NAME ?? 'Administrador',
+  },
 });

@@ -22,5 +22,6 @@ Usuário
 - **Acesso:** por **telas** (o usuário acessa determinadas telas, sem função/papel definido). As telas reais serão mapeadas quando definirmos as telas do Web; função/RBAC para depois.
 - **E-mail:** único **por empresa** (composite `id_empresa` + email).
 - **Primeiro acesso:** admin da empresa cria o usuário (senha provisória); troca obrigatória no primeiro login. Sem cadastro público.
+- **Seed de dev/teste:** no boot, um `SeedService` garante 1 empresa (`SEED_COMPANY_CNPJ=11222333000181`) e 1 usuário admin de testes (`SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD`, com `temporaryPassword: false`), usados para validar a API.
 - **Exclusão:** inativação (padrão).
 - **Login:** todo acesso (Web e App) passa pelo usuário.

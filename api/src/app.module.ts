@@ -3,10 +3,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { validate } from './config/env.validation';
 import { CompaniesModule } from './companies/company.module';
 import { HealthModule } from './health/health.module';
+import { SeedModule } from './seed/seed.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -33,6 +35,8 @@ import { UsersModule } from './users/users.module';
     HealthModule,
     CompaniesModule,
     UsersModule,
+    AuthModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

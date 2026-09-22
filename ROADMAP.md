@@ -4,6 +4,8 @@ Plano estruturado até a entrega final. Cada item marcado com `[x]` deve receber
 
 **Foco atual:** Backend da API (Fase 0–5).
 
+**Gitflow (decisão registrada — 2026-09):** **GitHub Flow** — `main` sempre deployável; trabalho em branch curta + **PR** (`feature/<slug>`, `fix/<slug>`, `refactor/<slug>`, `docs/<slug>`, `chore/<slug>`); nunca commitar direto na `main`; Conventional Commits; releases futuras via tag semântica em `main` (sem branch `develop`/`release`).
+
 ---
 
 ## Fase 0 — Fundação
@@ -25,15 +27,19 @@ Plano estruturado até a entrega final. Cada item marcado com `[x]` deve receber
   > Ajuste: não existe código ainda. Modelo mais simples em uso: `Empresa` é a raiz/registro do tenant; `id_empresa` nas tabelas de negócio virá nas camadas seguintes.
 - [ ] **Camada 3 — Empresa (entity + migration DDL)** e conexão efetiva do TypeORM.
   > Feito (parcial): entity `Company` (tabela `companies`) criada e conectada ao TypeORM via `TypeOrmModule.forFeature` + `autoLoadEntities` (schema via `synchronize` no dev). **Nomenclatura em inglês** (banco + código): `id` uuid; `cnpj` único global; `name`, `phone`, `logo`, endereço em colunas planas (`address_street`, `address_city`, `address_state`, `address_zipcode`); `status` active/inactive (default active); `created_at`/`updated_at`. Migration DDL ainda não gerada.
-- [ ] **Camada 4 — Auth** (JWT, login, guard de autenticação).
+- [x] **Camada 4 — Auth** (JWT, login, guard de autenticação).
+  > Feito: `POST /auth/login` (bcrypt + JWT), `JwtAuthGuard` aplicado em `/users` e `/companies`, payload `{ sub, email, companyId }`. Seed de dev cria empresa + usuário admin no boot (`admin@servicecontrol.com.br` / `admin123`, config via `SEED_*`). Pendente: refresh token, troca de senha provisória.
 - [ ] **Camada 5 — Tenant no ciclo** (interceptor/middleware injetando `id_empresa` do JWT no contexto + guard).
 - [ ] **Camada 6 — RBAC por telas** (`permissoes_telas` + guard de telas).
-- [ ] **Camada 7 — CRUD Empresa + CRUD Usuário** (senha provisória 1º login, unicidade por empresa; BaseRepository com escopo).
+- [x] **Camada 7 — CRUD Empresa + CRUD Usuário** (senha provisória 1º login, unicidade por empresa; BaseRepository com escopo).
+  > Feito (parcial): CRUD de Usuário e de Empresa implementados (`/users`, `/companies`, soft delete, validação `class-validator`). Pendente: `BaseRepository`/escopo tenant (tenant por `companyId` fornecido no request por ora), senha provisória efetiva depende do login (Camada 4).
 - [ ] Índices compostos iniciando com `id_empresa` nas entidades de negócio.
-- [ ] Entidade Empresa + CRUD.
-  > Entity `Company` (tabela `companies`) com schema criado; CRUD pendente (Camada 7).
+- [x] Entidade Empresa + CRUD.
+  > Entity `Company` (tabela `companies`) + CRUD completo (`POST/GET /companies`, `GET/PATCH/DELETE /companies/:id`).
 - [ ] Entidade Usuário + CRUD (senha provisória, troca obrigatória no 1º login).
-- [ ] Autenticação JWT (login, refresh token).
+  > CRUD `/users` completo; troca obrigatória no 1º login depende da autenticação.
+- [x] Autenticação JWT (login, refresh token).
+  > Login + access token JWT prontos; **refresh token pendente**.
 - [ ] Middleware de tenant derivado do token (nunca do cliente).
 - [ ] Permissões por tela (`permissoes_telas`) — guarda de acesso nos endpoints.
 - [ ] Validações de unicidade por empresa (padrão composto `id_empresa` + campo).

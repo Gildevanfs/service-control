@@ -12,16 +12,9 @@ export class CompaniesService {
     private readonly companiesRepository: Repository<Company>,
   ) {}
 
-  async create(createCompanyDto: CreateCompanyDto): Promise<Company> {
+  create(createCompanyDto: CreateCompanyDto): Promise<Company> {
     const company = this.companiesRepository.create({
-      name: createCompanyDto.name,
-      cnpj: createCompanyDto.cnpj,
-      phone: createCompanyDto.phone,
-      addressStreet: createCompanyDto.addressStreet,
-      addressCity: createCompanyDto.addressCity,
-      addressState: createCompanyDto.addressState,
-      addressZipcode: createCompanyDto.addressZipcode,
-      logo: createCompanyDto.logo,
+      ...createCompanyDto,
       status: createCompanyDto.status ?? 'active',
     });
     return this.companiesRepository.save(company);
@@ -43,8 +36,7 @@ export class CompaniesService {
     id: string,
     updateCompanyDto: UpdateCompanyDto,
   ): Promise<Company> {
-    const company = await this.findOne(id
-);
+    const company = await this.findOne(id);
     Object.assign(company, updateCompanyDto);
     return this.companiesRepository.save(company);
   }
