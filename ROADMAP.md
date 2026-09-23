@@ -47,6 +47,7 @@ Plano estruturado até a entrega final. Cada item marcado com `[x]` deve receber
 ## Fase 2 — Cadastros base (CRUDs)
 - [ ] Filial (com coordenadas + raio p/ validação GPS).
 - [ ] Cargo.
+  > Feito: entidade `Position` (`api/src/positions/`, tabela `positions`, rota `/positions`) — CRUD completo com tenant via JWT (`@CurrentUser`), nome único por empresa (`company_id` + `name`), soft delete `is_active`.
 - [ ] Funcionário (vínculo filial, equipe, encadeamento `id_superior`).
 - [ ] Cliente + ClienteEndereco (principal + alternativos).
 - [ ] Equipe (líder, supervisor, jornada padrão; vínculo de membros pela tela da equipe).

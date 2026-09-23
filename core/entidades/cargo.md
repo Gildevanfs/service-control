@@ -14,3 +14,4 @@ Cargo
 
 ## Decisões registradas
 - **Cadastro simples:** lista de cargos da empresa, referenciado por Funcionário (`id_cargo`).
+- **Código (2026-09):** entidade `Position` (tabela `positions`, rota `/positions`); `nome` único por empresa (`company_id` + `name`).

@@ -10,6 +10,7 @@ import configuration from './config/configuration';
 import { validate } from './config/env.validation';
 import { CompaniesModule } from './companies/company.module';
 import { HealthModule } from './health/health.module';
+import { PositionsModule } from './positions/positions.module';
 import { SeedModule } from './seed/seed.module';
 import { UsersModule } from './users/users.module';
 
@@ -37,6 +38,7 @@ import { UsersModule } from './users/users.module';
     HealthModule,
     CompaniesModule,
     UsersModule,
+    PositionsModule,
     AuthModule,
     SeedModule,
   ],
