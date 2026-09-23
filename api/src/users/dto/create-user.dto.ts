@@ -3,15 +3,11 @@ import {
   IsEmail,
   IsOptional,
   IsString,
-  IsUUID,
   Length,
   MinLength,
 } from 'class-validator';
 
 export class CreateUserDto {
-  @IsUUID()
-  companyId: string;
-
   @IsEmail()
   email: string;
 
