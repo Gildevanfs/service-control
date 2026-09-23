@@ -24,3 +24,4 @@ Filial
 - **GPS:** filial guarda coordenadas + raio; a abertura do turno valida se a equipe está dentro do raio da filial.
 - **Unicidade:** nome único **por empresa** (composite `id_empresa` + nome); CNPJ único **global**.
 - **Exclusão:** soft delete / inativação (padrão da empresa).
+- **Código (2026-09):** entidade `Branch` (tabela/rota `branches`); coordenadas em `latitude`/`longitude` (`double precision`), raio em `validation_radius_m` (default 100); CNPJ **imutável** (no PATCH é ignorado).
