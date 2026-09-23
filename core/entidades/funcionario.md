@@ -30,3 +30,10 @@ Funcionário
 - **Relação 1:1 com Usuário:** definida em `usuario.md` (usuários de gestão sem funcionário têm `id_funcionario` nulo).
 - **Membro de equipe:** `id_equipe` indica a equipe em que o funcionário executa (líder/ajudante). O vínculo é configurado pela tela da Equipe (ver `equipe.md`).
 - **Hierarquia:** `id_superior` encadeia supervisor → coordenador → gerente (opcional em cada nível).
+
+## Implementado (feature/funcionario)
+- Entidade `Employee` (`api/src/employees/`, tabela/rota `employees`), CRUD com tenant via JWT (`@CurrentUser`).
+- `cpf` único por empresa (`company_id` + `cpf`), armazenado em 11 dígitos, validado com `IsValidCpf` e **imutável** após criar (ignorado no update).
+- `status` como `ativo | afastado | inativo`; soft delete = `status: 'inativo'`.
+- FKs: `position_id` → Cargo, `branch_id` → Filial, `superior_id` → Funcionário (auto-FK).
+- `team_id` guardada como coluna reservada **sem FK** até a Equipe existir (evita dependência pendente no `synchronize`).

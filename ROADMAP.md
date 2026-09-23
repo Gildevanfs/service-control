@@ -49,7 +49,8 @@ Plano estruturado até a entrega final. Cada item marcado com `[x]` deve receber
   > Feito: entidade `Branch` (`api/src/branches/`, tabela/rota `branches`) — CRUD completo com tenant via JWT (`@CurrentUser`), CNPJ único global/imutável após criar (ignorado no update), coordenadas (`latitude`/`longitude`) + `validation_radius_m` (default 100), soft delete `is_active`.
 - [ ] Cargo.
   > Feito: entidade `Position` (`api/src/positions/`, tabela `positions`, rota `/positions`) — CRUD completo com tenant via JWT (`@CurrentUser`), nome único por empresa (`company_id` + `name`), soft delete `is_active`.
-- [ ] Funcionário (vínculo filial, equipe, encadeamento `id_superior`).
+- [x] Funcionário (vínculo filial, equipe, encadeamento `id_superior`).
+  > Feito: entidade `Employee` (`api/src/employees/`, tabela/rota `employees`) — CRUD completo com tenant via JWT (`@CurrentUser`), CPF válido (`IsValidCpf`) e único por empresa (`company_id` + `cpf`), imutável após criar (ignorado no update), `status` ativo/afastado/inativo (soft delete = `inativo`), FKs `position_id`, `branch_id` e `superior_id` (auto-FK); `team_id` é coluna reservada sem FK até a Equipe existir.
 - [ ] Cliente + ClienteEndereco (principal + alternativos).
 - [ ] Equipe (líder, supervisor, jornada padrão; vínculo de membros pela tela da equipe).
 

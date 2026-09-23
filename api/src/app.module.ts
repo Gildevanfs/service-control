@@ -10,6 +10,7 @@ import { QueryFailedErrorFilter } from './common/filters/query-failed-error.filt
 import configuration from './config/configuration';
 import { validate } from './config/env.validation';
 import { CompaniesModule } from './companies/company.module';
+import { EmployeesModule } from './employees/employees.module';
 import { HealthModule } from './health/health.module';
 import { PositionsModule } from './positions/positions.module';
 import { SeedModule } from './seed/seed.module';
@@ -41,6 +42,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     PositionsModule,
     BranchesModule,
+    EmployeesModule,
     AuthModule,
     SeedModule,
   ],
