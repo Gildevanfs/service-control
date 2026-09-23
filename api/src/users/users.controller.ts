@@ -7,10 +7,11 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  Query,
   UseGuards,
 } from '@nestjs/common';
+import { AuthenticatedUser } from '../auth/auth.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
@@ -22,39 +23,40 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUserDto);
+  create(
+    @CurrentUser() authUser: AuthenticatedUser,
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<User> {
+    return this.usersService.create(createUserDto, authUser.companyId);
   }
 
   @Get()
-  findAll(
-    @Query('companyId', ParseUUIDPipe) companyId: string,
-  ): Promise<User[]> {
-    return this.usersService.findAll(companyId);
+  findAll(@CurrentUser() authUser: AuthenticatedUser): Promise<User[]> {
+    return this.usersService.findAll(authUser.companyId);
   }
 
   @Get(':id')
   findOne(
+    @CurrentUser() authUser: AuthenticatedUser,
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('companyId', ParseUUIDPipe) companyId: string,
   ): Promise<User> {
-    return this.usersService.findOne(id, companyId);
+    return this.usersService.findOne(id, authUser.companyId);
   }
 
   @Patch(':id')
   update(
+    @CurrentUser() authUser: AuthenticatedUser,
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('companyId', ParseUUIDPipe) companyId: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.usersService.update(id, companyId, updateUserDto);
+    return this.usersService.update(id, authUser.companyId, updateUserDto);
   }
 
   @Delete(':id')
   remove(
+    @CurrentUser() authUser: AuthenticatedUser,
     @Param('id', ParseUUIDPipe) id: string,
-    @Query('companyId', ParseUUIDPipe) companyId: string,
   ): Promise<void> {
-    return this.usersService.remove(id, companyId);
+    return this.usersService.remove(id, authUser.companyId);
   }
 }
