@@ -30,7 +30,7 @@ Instruções para agentes trabalhando neste repositório. Código/identificadore
 
 ## Convenções
 - Validação via `class-validator` + `ValidationPipe({ whitelist: true, transform: true })` (global, em `main.ts`).
-- Soft delete: nunca apaga fisicamente — marca `status: 'inactive'`.
+- Soft delete: nunca apaga fisicamente — marca `isActive: false` (coluna `is_active`).
 - Senhas: hash `bcryptjs` (não bcrypt), com `temporaryPassword: true` no primeiro cadastro.
 - UUIDs como PK; multi-tenant por `companyId`.
 - Build: `cd api && npm run build` (0 erros é o critério de "ok"). Smoke via `Invoke-RestMethod` nas rotas da raiz.
@@ -39,6 +39,7 @@ Instruções para agentes trabalhando neste repositório. Código/identificadore
 - `main` é a única branch de longo prazo e **sempre deve estar deployável** (verde).
 - Trabalho SEMPRE em branch curta + **Pull Request**: `feature/<slug>` (novo), `fix/<slug>` (correção), `refactor/<slug>`, `docs/<slug>`, `chore/<slug>`.
 - **Nunca commitar/forçar direto na `main`**; merge só via PR com review.
+- **Merge/revisões são manuais do usuário:** não pushar, mergir ou abrir PR por conta própria. Quando um merge/PR for necessário, apenas **informar** o usuário. Se o usuário pedir revisão, executá-la; a ação de **mesclar** é sempre feita pelo usuário.
 - Conventional Commits (já em uso): `feat:`, `fix:`, `docs:`, `refactor:`, `chore:`.
 - Antes de merge, PR deve passar no build (`npm run build` sem erros) e smoke de rotas.
 - Releases futuras: `main` recebe tag semântica (`v0.1.0`) — GitHub Flow não cria branch `develop`/`release`.

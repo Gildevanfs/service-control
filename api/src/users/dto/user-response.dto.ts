@@ -21,7 +21,7 @@ export class UserResponseDto {
   temporaryPassword: boolean;
 
   @Expose()
-  status: 'active' | 'inactive';
+  isActive: boolean;
 
   @Exclude()
   passwordHash: string;

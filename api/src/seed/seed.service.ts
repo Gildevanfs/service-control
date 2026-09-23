@@ -25,17 +25,17 @@ export class SeedService implements OnApplicationBootstrap {
   }
 
   private async seedCompanyAndAdmin() {
-    const cnpj =
-      this.config.get<string>('seed.companyCnpj') ?? '11222333000181';
-    const companyName =
-      this.config.get<string>('seed.companyName') ?? 'Empresa Seed';
-    const adminEmail =
-      this.config.get<string>('seed.adminEmail') ??
-      'admin@servicecontrol.com.br';
-    const adminPassword =
-      this.config.get<string>('seed.adminPassword') ?? 'admin123';
-    const adminName =
-      this.config.get<string>('seed.adminName') ?? 'Administrador';
+    const cnpj = this.config.get<string>('seed.companyCnpj');
+    const companyName = this.config.get<string>('seed.companyName');
+    const adminEmail = this.config.get<string>('seed.adminEmail');
+    const adminPassword = this.config.get<string>('seed.adminPassword');
+    const adminName = this.config.get<string>('seed.adminName');
+
+    if (!cnpj || !companyName || !adminEmail || !adminPassword || !adminName) {
+      throw new Error(
+        'Faltam configurações no env: defina SEED_COMPANY_CNPJ, SEED_COMPANY_NAME, SEED_ADMIN_EMAIL, SEED_ADMIN_PASSWORD e SEED_ADMIN_NAME.',
+      );
+    }
 
     let company = await this.companiesRepository.findOne({ where: { cnpj } });
     if (!company) {
@@ -43,7 +43,7 @@ export class SeedService implements OnApplicationBootstrap {
         this.companiesRepository.create({
           name: companyName,
           cnpj,
-          status: 'active',
+          isActive: true,
         }),
       );
       this.logger.log(`Seed: empresa criada (${company.id})`);
@@ -60,7 +60,7 @@ export class SeedService implements OnApplicationBootstrap {
           email: adminEmail,
           passwordHash,
           name: adminName,
-          status: 'active',
+          isActive: true,
           temporaryPassword: false,
         }),
       );

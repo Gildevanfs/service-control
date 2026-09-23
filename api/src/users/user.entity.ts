@@ -36,8 +36,8 @@ export class User {
   @Column({ type: 'boolean', default: true, name: 'temporary_password' })
   temporaryPassword: boolean;
 
-  @Column({ type: 'varchar', length: 10, default: 'active' })
-  status: 'active' | 'inactive';
+  @Column({ type: 'boolean', default: true, name: 'is_active' })
+  isActive: boolean;
 
   @Column({ type: 'timestamptz', nullable: true, name: 'last_login_at' })
   lastLoginAt?: Date;

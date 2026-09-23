@@ -40,6 +40,26 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   JWT_EXPIRES_IN?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  SEED_COMPANY_CNPJ: string;
+
+  @IsString()
+  @IsNotEmpty()
+  SEED_COMPANY_NAME: string;
+
+  @IsString()
+  @IsNotEmpty()
+  SEED_ADMIN_EMAIL: string;
+
+  @IsString()
+  @IsNotEmpty()
+  SEED_ADMIN_PASSWORD: string;
+
+  @IsString()
+  @IsNotEmpty()
+  SEED_ADMIN_NAME: string;
 }
 
 export function validate(config: Record<string, unknown>) {

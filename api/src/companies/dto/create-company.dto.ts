@@ -1,5 +1,5 @@
 import {
-  IsEnum,
+  IsBoolean,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -48,6 +48,6 @@ export class CreateCompanyDto {
   logo?: string;
 
   @IsOptional()
-  @IsEnum(['active', 'inactive'])
-  status?: 'active' | 'inactive';
+  @IsBoolean()
+  isActive?: boolean;
 }

@@ -54,8 +54,8 @@ export class Company {
   @Column({ type: 'varchar', length: 500, nullable: true })
   logo?: string;
 
-  @Column({ type: 'varchar', length: 10, default: 'active' })
-  status: 'active' | 'inactive';
+  @Column({ type: 'boolean', default: true, name: 'is_active' })
+  isActive: boolean;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

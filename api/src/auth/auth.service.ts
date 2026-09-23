@@ -57,7 +57,7 @@ export class AuthService {
         name: user.name,
         companyId: user.companyId,
         temporaryPassword: user.temporaryPassword,
-        status: user.status,
+        isActive: user.isActive,
       },
     };
   }

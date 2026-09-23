@@ -13,11 +13,9 @@ export class CompaniesService {
   ) {}
 
   create(createCompanyDto: CreateCompanyDto): Promise<Company> {
-    const company = this.companiesRepository.create({
-      ...createCompanyDto,
-      status: createCompanyDto.status ?? 'active',
-    });
-    return this.companiesRepository.save(company);
+    return this.companiesRepository.save(
+      this.companiesRepository.create({ ...createCompanyDto }),
+    );
   }
 
   findAll(): Promise<Company[]> {
@@ -44,7 +42,7 @@ export class CompaniesService {
   async remove(id: string): Promise<void> {
     const company = await this.findOne(id);
     // Soft delete: inativa (nunca apaga fisicamente).
-    company.status = 'inactive';
+    company.isActive = false;
     await this.companiesRepository.save(company);
   }
 }

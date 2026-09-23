@@ -12,7 +12,7 @@ Usuário
 ├── nome
 ├── permissoes_telas (lista de telas acessíveis) — acesso por tela, sem papel fixo
 ├── id_funcionario (FK → Funcionário, nullável, 1:1)
-├── status (ativo/inativo)
+├── is_active (ativo/inativo)
 ├── last_login_at
 └── created_at / updated_at
 ```

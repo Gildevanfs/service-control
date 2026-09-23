@@ -22,13 +22,9 @@ export class UsersService {
     );
 
     const user = this.usersRepository.create({
-      companyId: createUserDto.companyId,
-      email: createUserDto.email,
+      ...createUserDto,
       passwordHash,
-      name: createUserDto.name,
-      phone: createUserDto.phone,
       temporaryPassword: true,
-      status: createUserDto.status ?? 'active',
     });
 
     return this.usersRepository.save(user);
@@ -72,8 +68,8 @@ export class UsersService {
     if (updateUserDto.phone !== undefined) {
       user.phone = updateUserDto.phone;
     }
-    if (updateUserDto.status !== undefined) {
-      user.status = updateUserDto.status;
+    if (updateUserDto.isActive !== undefined) {
+      user.isActive = updateUserDto.isActive;
     }
 
     return this.usersRepository.save(user);
@@ -82,7 +78,7 @@ export class UsersService {
   async remove(id: string, companyId: string): Promise<void> {
     const user = await this.findOne(id, companyId);
     // Soft delete: inativa (nunca apaga fisicamente).
-    user.status = 'inactive';
+    user.isActive = false;
     await this.usersRepository.save(user);
   }
 }

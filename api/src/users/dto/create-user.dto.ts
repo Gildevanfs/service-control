@@ -1,6 +1,6 @@
 import {
+  IsBoolean,
   IsEmail,
-  IsEnum,
   IsOptional,
   IsString,
   IsUUID,
@@ -29,6 +29,6 @@ export class CreateUserDto {
   phone?: string;
 
   @IsOptional()
-  @IsEnum(['active', 'inactive'])
-  status?: 'active' | 'inactive';
+  @IsBoolean()
+  isActive?: boolean;
 }
