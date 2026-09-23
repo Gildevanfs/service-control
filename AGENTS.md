@@ -5,6 +5,7 @@ Instruções para agentes trabalhando neste repositório. Código/identificadore
 ## Regras de conduta (obrigatórias)
 - **Toda alteração de arquivos (criar, editar, mover ou excluir) deve ser ANTES solicitada e autorizada pelo usuário** — só executa após a aprovação explícita.
 - **Mostrar o código para aprovação:** ao implementar uma feature, apresente os arquivos/trechos de código **um a um** (ou o diff completo) e aguarde a **aprovação do usuário** antes de prosseguir (commit, push, smoke que grava dados). Nunca pule esse passo.
+- **Nenhum commit (nem push) sem permissão explícita do usuário:** antes de commitar, solicite a autorização e aguarde a confirmação. A verificação de integridade (build, smoke, containers) deve ocorrer antes, mas o `git commit`/`git push` só após o "pode commitar".
 - **Sempre remova arquivos não úteis.** Scripts de diagnóstico/perfuração (`.ps1`, probes, smokes temporários), artefatos de build, lixo e arquivos que não reconhece **devem ser apagados do disco** — nunca deixe lixo no projeto. Confira ao final de cada tarefa com `Get-ChildItem`.
 - **Sempre valide até não haver erro.** Build (`npm run build`), lint e smoke tests devem passar **sem nenhum erro** antes de dar a tarefa por concluída. Se algo falhar, corrija e re-verifique até `build` retornar 0 erros.
 - **Antes de todo commit, verifique a integridade do projeto:** containers no ar, `docker compose ps` sem falhas, logs da API sem erros e smoke das rotas essenciais (`/health`, login, rotas protegidas) respondendo — só então commitar.
