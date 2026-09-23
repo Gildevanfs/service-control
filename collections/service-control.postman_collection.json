@@ -1,0 +1,425 @@
+{
+  "info": {
+    "name": "ServiceControl API",
+    "_postman_id": "3f8b2e7a-1c4d-4a5e-9f0b-6d2c8e9a1b4f",
+    "description": "Collection da API ServiceControl (NestJS + JWT).\n\nComo usar:\n- Variavel `baseUrl` aponta para a API (default http://localhost:1511).\n- Execute `Login` primeiro. No Postman, o script de teste captura automaticamente `token` e `companyId` (collection variables).\n- No Insomnia: importe este arquivo (Collection v2), execute o `Login` e copie o `accessToken` para a variavel de ambiente global `token`.\n- Endpoints protegidos usam `Authorization: Bearer {{token}}`; o tenant e definido pelo JWT (nunca enviar companyId no body).\n- Substantivos de caminho: /companies, /users, /positions, /branches, /employees (sem prefixo /api).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:1511" },
+    { "key": "token", "value": "" },
+    { "key": "companyId", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "positionId", "value": "" },
+    { "key": "branchId", "value": "" },
+    { "key": "employeeId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "health",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('token', pm.response.json().accessToken);",
+                  "pm.collectionVariables.set('companyId', pm.response.json().user.companyId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@servicecontrol.com.br\",\n  \"password\": \"admin123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        {
+          "name": "Criar empresa",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Empresa Exemplo\",\n  \"cnpj\": \"11222333000181\",\n  \"phone\": \"1133334444\",\n  \"addressStreet\": \"Av. Paulista 1000\",\n  \"addressCity\": \"Sao Paulo\",\n  \"addressState\": \"SP\",\n  \"addressZipcode\": \"01310000\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/companies", "host": ["{{baseUrl}}"], "path": ["companies"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar empresas",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/companies", "host": ["{{baseUrl}}"], "path": ["companies"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar empresa",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/companies/{{companyId}}", "host": ["{{baseUrl}}"], "path": ["companies", "{{companyId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar empresa",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Empresa Exemplo Atualizada\",\n  \"phone\": \"1133335555\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/companies/{{companyId}}", "host": ["{{baseUrl}}"], "path": ["companies", "{{companyId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Inativar empresa",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/companies/{{companyId}}", "host": ["{{baseUrl}}"], "path": ["companies", "{{companyId}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Criar usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Joao da Silva\",\n  \"email\": \"joao@empresa.com.br\",\n  \"password\": \"123456\",\n  \"phone\": \"11987654321\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/users", "host": ["{{baseUrl}}"], "path": ["users"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/users", "host": ["{{baseUrl}}"], "path": ["users"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar usuario",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["users", "{{userId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar usuario",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Joao da Silva Santos\",\n  \"phone\": \"11987654322\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["users", "{{userId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Inativar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["users", "{{userId}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Positions (Cargos)",
+      "item": [
+        {
+          "name": "Criar cargo",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Auxiliar de Servicos\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/positions", "host": ["{{baseUrl}}"], "path": ["positions"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar cargos",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/positions", "host": ["{{baseUrl}}"], "path": ["positions"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar cargo",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/positions/{{positionId}}", "host": ["{{baseUrl}}"], "path": ["positions", "{{positionId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar cargo",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Auxiliar de Servicos Senior\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/positions/{{positionId}}", "host": ["{{baseUrl}}"], "path": ["positions", "{{positionId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Inativar cargo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/positions/{{positionId}}", "host": ["{{baseUrl}}"], "path": ["positions", "{{positionId}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Branches (Filiais)",
+      "item": [
+        {
+          "name": "Criar filial",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Filial Centro\",\n  \"cnpj\": \"29374059000121\",\n  \"phone\": \"11988887777\",\n  \"addressStreet\": \"Rua XV de Novembro 200\",\n  \"addressNumber\": \"200\",\n  \"addressNeighborhood\": \"Centro\",\n  \"addressCity\": \"Sao Paulo\",\n  \"addressState\": \"SP\",\n  \"addressZipcode\": \"01013000\",\n  \"latitude\": -23.55,\n  \"longitude\": -46.63,\n  \"validationRadiusM\": 150\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/branches", "host": ["{{baseUrl}}"], "path": ["branches"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar filiais",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/branches", "host": ["{{baseUrl}}"], "path": ["branches"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar filial",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/branches/{{branchId}}", "host": ["{{baseUrl}}"], "path": ["branches", "{{branchId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar filial",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Filial Centro Leste\",\n  \"validationRadiusM\": 200\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/branches/{{branchId}}", "host": ["{{baseUrl}}"], "path": ["branches", "{{branchId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Inativar filial",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/branches/{{branchId}}", "host": ["{{baseUrl}}"], "path": ["branches", "{{branchId}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Employees (Funcionarios)",
+      "item": [
+        {
+          "name": "Criar funcionario",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maria Souza\",\n  \"cpf\": \"52998224725\",\n  \"phone\": \"11999998888\",\n  \"email\": \"maria@empresa.com.br\",\n  \"birthDate\": \"1992-03-14\",\n  \"hireDate\": \"2024-02-01\",\n  \"positionId\": \"{{positionId}}\",\n  \"branchId\": \"{{branchId}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/employees", "host": ["{{baseUrl}}"], "path": ["employees"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar funcionarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/employees", "host": ["{{baseUrl}}"], "path": ["employees"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar funcionario",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/employees/{{employeeId}}", "host": ["{{baseUrl}}"], "path": ["employees", "{{employeeId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar funcionario",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maria Souza Oliveira\",\n  \"phone\": \"11999998887\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/employees/{{employeeId}}", "host": ["{{baseUrl}}"], "path": ["employees", "{{employeeId}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Inativar funcionario",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" }
+            ],
+            "url": { "raw": "{{baseUrl}}/employees/{{employeeId}}", "host": ["{{baseUrl}}"], "path": ["employees", "{{employeeId}}"] }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
