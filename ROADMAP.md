@@ -46,6 +46,7 @@ Plano estruturado até a entrega final. Cada item marcado com `[x]` deve receber
 
 ## Fase 2 — Cadastros base (CRUDs)
 - [ ] Filial (com coordenadas + raio p/ validação GPS).
+  > Feito: entidade `Branch` (`api/src/branches/`, tabela/rota `branches`) — CRUD completo com tenant via JWT (`@CurrentUser`), CNPJ único global/imutável após criar (ignorado no update), coordenadas (`latitude`/`longitude`) + `validation_radius_m` (default 100), soft delete `is_active`.
 - [ ] Cargo.
 - [ ] Funcionário (vínculo filial, equipe, encadeamento `id_superior`).
 - [ ] Cliente + ClienteEndereco (principal + alternativos).

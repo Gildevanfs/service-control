@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { BranchesModule } from './branches/branches.module';
 import { QueryFailedErrorFilter } from './common/filters/query-failed-error.filter';
 import configuration from './config/configuration';
 import { validate } from './config/env.validation';
@@ -37,6 +38,7 @@ import { UsersModule } from './users/users.module';
     HealthModule,
     CompaniesModule,
     UsersModule,
+    BranchesModule,
     AuthModule,
     SeedModule,
   ],
