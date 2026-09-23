@@ -4,6 +4,7 @@ Instruções para agentes trabalhando neste repositório. Código/identificadore
 
 ## Regras de conduta (obrigatórias)
 - **Toda alteração de arquivos (criar, editar, mover ou excluir) deve ser ANTES solicitada e autorizada pelo usuário** — só executa após a aprovação explícita.
+- **Criar registros/dados (INSERT via API ou SQL, smokes que gravam no banco) também exige o mesmo tratamento:** ANTES de inserir, mostre quais registros serão criados e aguarde autorização/sinal verde; ao final, limpe os registros de teste e informe o que foi criado/removido.
 - **Sempre remova arquivos não úteis.** Scripts de diagnóstico/perfuração (`.ps1`, probes, smokes temporários), artefatos de build, lixo e arquivos que não reconhece **devem ser apagados do disco** — nunca deixe lixo no projeto. Confira ao final de cada tarefa com `Get-ChildItem`.
 - **Sempre valide até não haver erro.** Build (`npm run build`), lint e smoke tests devem passar **sem nenhum erro** antes de dar a tarefa por concluída. Se algo falhar, corrija e re-verifique até `build` retornar 0 erros.
 - **Antes de todo commit, verifique a integridade do projeto:** containers no ar, `docker compose ps` sem falhas, logs da API sem erros e smoke das rotas essenciais (`/health`, login, rotas protegidas) respondendo — só então commitar.
