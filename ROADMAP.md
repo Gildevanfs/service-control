@@ -21,8 +21,8 @@ Plano estruturado até a entrega final. Cada item marcado com `[x]` deve receber
 
 **Modo de trabalho:** camadas pequenas, implementação primeiro; a camada só é considerada concluída após o sistema funcionar. Os **testes** serão construídos somente após as implementações e o funcionamento do sistema.
 
-- [ ] **Camada 1 — Validadores BR** (CPF/CNPJ) — `src/common/validators/`. Regras oficiais (dv, dígitos repetidos).
-  > Ajuste: não existe código ainda. Por ora só há validação básica de formato do CNPJ (14 dígitos) na entidade `Empresa`.
+- [x] **Camada 1 — Validadores BR** (CPF/CNPJ) — `src/common/validators/`. Regras oficiais (dv, dígitos repetidos).
+  > Feito: `api/src/common/validators/` (2026-09) — `isValidCnpj`/`isValidCpf` (funções puras, aceitam máscara) + decorators `@IsValidCnpj`/`@IsValidCpf` (class-validator) com barrel `index.ts`. Aplicados na entidade e DTO de Empresa (CNPJ normalizado p/ só dígitos no save). CNPJ duplicado → **409** via `QueryFailedErrorFilter` (unique 23505).
 - [ ] **Camada 2 — Fundação tenant** — `src/common/tenant/` (TenantContext via AsyncLocalStorage, getEmpresaId/current/run) e `BaseTenantEntity`.
   > Ajuste: não existe código ainda. Modelo mais simples em uso: `Empresa` é a raiz/registro do tenant; `id_empresa` nas tabelas de negócio virá nas camadas seguintes.
 - [ ] **Camada 3 — Empresa (entity + migration DDL)** e conexão efetiva do TypeORM.

@@ -1,11 +1,12 @@
+import { Transform } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
   IsOptional,
   IsString,
   Length,
-  Matches,
 } from 'class-validator';
+import { IsValidCnpj, onlyDigits } from '../../common/validators';
 
 export class CreateCompanyDto {
   @IsString()
@@ -14,7 +15,8 @@ export class CreateCompanyDto {
   name: string;
 
   @IsString()
-  @Matches(/^\d{14}$/, { message: 'CNPJ must contain only 14 digits' })
+  @Transform(({ value }) => (typeof value === 'string' ? onlyDigits(value) : value))
+  @IsValidCnpj({ message: 'CNPJ inválido' })
   cnpj: string;
 
   @IsOptional()

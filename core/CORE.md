@@ -41,6 +41,8 @@ Cada entidade tem seu próprio arquivo em `entidades/`, com estrutura e decisõe
 | Turno | [entidades/turno.md](entidades/turno.md) | detalhada |
 | TimeEntry | [entidades/time-entry.md](entidades/time-entry.md) | detalhada |
 
+**Validadores BR (implementado 2026-09):** `api/src/common/validators/` — funções puras `isValidCnpj`/`isValidCpf` (dígito verificador oficial, rejeita repetidos, aceita máscara) e decorators `@IsValidCnpj`/`@IsValidCpf` (class-validator), com barrel `index.ts` para reuso em qualquer camada. Aplicados na entidade e DTO de Empresa (CNPJ normalizado para só dígitos). Duplicidade em unique → 409 (`QueryFailedErrorFilter`, código 23505).
+
 ## 4. Regras do app mobile
 - Início/fim de **turno** registra hora e **GPS** (validação simples de localidade — ver Filial).
 - Serviços só aparecem para a equipe com turno aberto.

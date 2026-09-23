@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { QueryFailedErrorFilter } from './common/filters/query-failed-error.filter';
 import configuration from './config/configuration';
 import { validate } from './config/env.validation';
 import { CompaniesModule } from './companies/company.module';
@@ -39,6 +41,12 @@ import { UsersModule } from './users/users.module';
     SeedModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: QueryFailedErrorFilter,
+    },
+  ],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { Matches } from 'class-validator';
+import { IsValidCnpj } from '../common/validators';
 import {
   Column,
   CreateDateColumn,
@@ -18,7 +18,7 @@ export class Company {
 
   @Index({ unique: true })
   @Column({ type: 'varchar', length: 14 })
-  @Matches(/^\d{14}$/, { message: 'CNPJ must contain only 14 digits' })
+  @IsValidCnpj()
   cnpj: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true, name: 'phone' })
